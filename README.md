@@ -8,8 +8,8 @@
 ## Folders structure
 - **.venv folder** contains virtual environment including library to run this project
 - **output_raw folder** contains raw data from API including the data of each products and the product id which cannot fetch due to 404 error or timeout error
-- **output folder** contains all product data after normalizing the description including: finding all image links in the description, replacing <br /> with \n, replacing <p> and </p> with \n, replacing <li> with "- " and </li> with \n, removing all remaining html tag
+- **output folder** contains all product data after normalizing the description including: finding all image links in the description, replacing ```<br />``` with "\n", replacing ```<p>``` and ```</p>``` with "\n", replacing ```<li>``` with "- " and ```</li>``` with "\n", removing all remaining html tag
 
 # Process
-First, run **collect_data.py** to fetch data for all products through id_product.csv
-Second, run **process_description.py** to normalize the html tag and extract image sources in the description and update it into images field
+First, run ```collect_data.py``` to fetch data for all products through id_product.csv. <br />
+Second, run ```process_description.py``` to normalize the html tags and extract image sources in the description and add them to the images field
