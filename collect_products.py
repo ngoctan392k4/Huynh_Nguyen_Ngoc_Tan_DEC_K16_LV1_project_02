@@ -2,7 +2,7 @@ import requests
 import time
 from tqdm import tqdm
 import csv
-from multiprocessing import Pool, cpu_count
+from multiprocessing import Pool
 import json
 
 def fetch_data(product_id):
@@ -71,10 +71,9 @@ def collect_data(csv_file, part_size=1000):
             if pd_id:
                 product_ids.append(pd_id)
 
-    # Process with max_worker product ids at the same time => faster
-    # imap_unordered allows it receive fetched without ordering => No wait => faster
-    max_worker = cpu_count() * 2
-    with Pool(processes=max_worker) as pool:
+    # Process with 40 product ids at the same time => faster
+    # imap_unordered allows it receive fetched data without ordering => No wait => faster
+    with Pool(processes=40) as pool:
         for result in tqdm(pool.imap_unordered(fetch_data, product_ids), total=len(product_ids)):
             if isinstance(result, dict) and "status" in result:
                 if result["status"] == "http_error":
@@ -84,15 +83,16 @@ def collect_data(csv_file, part_size=1000):
             else:
                 collected.append(result)
 
+            # if it collected 1000 products, it will store in a .json file
             if len(collected) == part_size:
                 save_products(collected, part)
                 collected = []
                 part+=1
-        if collected:
+        if collected: # save the last products if there are less than 1000 products
             save_products(collected, part)
 
-        save_http_error(http_errors)
-        save_timeout_error(timeout_errors)
+        save_http_error(http_errors) # save all product ids that receive http error
+        save_timeout_error(timeout_errors) # save all product ids that receive timeout error => fetch again later
 
 def save_products(data, part):
     file_name = f"output_raw/product_part{part}.json"
