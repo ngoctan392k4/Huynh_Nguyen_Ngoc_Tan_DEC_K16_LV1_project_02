@@ -127,57 +127,57 @@ def collect_data(input_csv_file, batch_size=1000):
 
 # save product in the current batch into the .json file
 def save_batch_data(data, batch_num):
-    os.makedirs("output_raw_2", exist_ok=True)
-    with open(f"output_raw_2/products_batch_{batch_num}.json", "w", encoding="utf-8") as wf:
+    os.makedirs("output_raw", exist_ok=True)
+    with open(f"output_raw/products_batch_{batch_num}.json", "w", encoding="utf-8") as wf:
         json.dump(data, wf, ensure_ascii=False, indent=2)
-    print(f"Have saved {len(data)} products in batch {batch_num} into output_raw_2/products_batch_{batch_num}.json")
+    print(f"Have saved {len(data)} products in batch {batch_num} into output_raw/products_batch_{batch_num}.json")
 
 # save all product ids that receive http error
 def save_http_error(data):
-    os.makedirs("output_raw_2/error", exist_ok=True)
-    check_not_exist = not os.path.exists("output_raw_2/error/http_error.csv")
-    with open("output_raw_2/error/http_error.csv", "a", encoding="utf-8", newline="") as wf:
+    os.makedirs("output_raw/error", exist_ok=True)
+    check_not_exist = not os.path.exists("output_raw/error/http_error.csv")
+    with open("output_raw/error/http_error.csv", "a", encoding="utf-8", newline="") as wf:
         writer = csv.writer(wf)
         if check_not_exist:
             writer.writerow(["product_id", "code"])
         for pd_id, code in data:
             writer.writerow([pd_id, code])
-    print(f"Have saved {len(data)} HTTP errors into output_raw_2/error/http_error.csv")
+    print(f"Have saved {len(data)} HTTP errors into output_raw/error/http_error.csv")
 
 # save all product ids that receive 404 not found error
 def save_404_error(data):
-    os.makedirs("output_raw_2/error", exist_ok=True)
-    check_not_exist = not os.path.exists("output_raw_2/error/error_404_code.csv")
-    with open("output_raw_2/error/error_404_code.csv", "a", encoding="utf-8", newline="") as wf:
+    os.makedirs("output_raw/error", exist_ok=True)
+    check_not_exist = not os.path.exists("output_raw/error/error_404_code.csv")
+    with open("output_raw/error/error_404_code.csv", "a", encoding="utf-8", newline="") as wf:
         writer = csv.writer(wf)
         if check_not_exist:
             writer.writerow(["product_id", "code"])
         for pd_id, code in data:
             writer.writerow([pd_id, code])
-    print(f"Have saved {len(data)} \"404\" errors into output_raw_2/error/error_404_code.csv")
+    print(f"Have saved {len(data)} \"404\" errors into output_raw/error/error_404_code.csv")
 
 # save all product ids that receive timeout error => fetch again later
 def save_timeout_error(data):
-    os.makedirs("output_raw_2/error", exist_ok=True)
-    check_not_exist = not os.path.exists("output_raw_2/error/timeout_error.csv")
-    with open("output_raw_2/error/timeout_error.csv", "a", encoding="utf-8", newline="") as wf:
+    os.makedirs("output_raw/error", exist_ok=True)
+    check_not_exist = not os.path.exists("output_raw/error/timeout_error.csv")
+    with open("output_raw/error/timeout_error.csv", "a", encoding="utf-8", newline="") as wf:
         writer = csv.writer(wf)
         if check_not_exist:
             writer.writerow(["product_id"])
         for pd_id in data:
             writer.writerow([pd_id])
-    print(f"Have saved {len(data)} timeout errors into output_raw_2/error/timeout_error.csv")
+    print(f"Have saved {len(data)} timeout errors into output_raw/error/timeout_error.csv")
 
 # save checkpoint - prevent unexpected error like server die, network error,....
 def save_checkpoint(checkpoint_batch):
-    os.makedirs("output_raw_2/checkpoint", exist_ok=True)
-    with open("output_raw_2/checkpoint/checkpoint.txt", "w", encoding="utf-8") as wf:
+    os.makedirs("output_raw/checkpoint", exist_ok=True)
+    with open("output_raw/checkpoint/checkpoint.txt", "w", encoding="utf-8") as wf:
         wf.write(str(checkpoint_batch))
 
 # read checkpoint to get the latest batch => continue fetch data with the latest batch
 def load_checkpoint():
-    if os.path.exists("output_raw_2/checkpoint/checkpoint.txt"):
-        with open("output_raw_2/checkpoint/checkpoint.txt", "r", encoding="utf-8") as rf:
+    if os.path.exists("output_raw/checkpoint/checkpoint.txt"):
+        with open("output_raw/checkpoint/checkpoint.txt", "r", encoding="utf-8") as rf:
             return int(rf.read())
     else:
         return 1
@@ -185,7 +185,7 @@ def load_checkpoint():
 # Main
 if __name__ == "__main__":
     start_time = time.time()
-    collect_data("output_raw/error/.csv")
+    collect_data("id_product.csv")
     end_time = time.time()
     duration = end_time - start_time
     print(f"\nCompleted in {duration:.2f} seconds")
