@@ -7,7 +7,8 @@
 
 ## Folders structure
 - **.venv folder** contains virtual environment including library to run this project
-- **output_raw folder** contains raw data from API including the data of each products and the product id which cannot fetch due to 404 error or timeout error
+- **output_raw folder** contains raw data from API including the data of each products and the product id which cannot fetch due to 404 error or timeout error or other http errors
+- **output_raw_2 folder** contains raw data from API including the data of each products from 404 error or timeout error or other http errors files (check again)
 - **output folder** contains all product data after normalizing the description including: finding all image urls in the description, replacing ```<br />``` with "\n", replacing ```<p>``` and ```</p>``` with "\n", replacing ```<li>``` with "- " and ```</li>``` with "\n", removing all remaining html tag
 
 ## Collect_products.py structure:
