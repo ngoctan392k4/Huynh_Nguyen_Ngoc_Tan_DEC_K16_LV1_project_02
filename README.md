@@ -21,7 +21,7 @@
 
 # Process
 First, run ```collect_data.py``` to fetch data for all products through id_product.csv. <br />
-Second, run ```collect_data.py``` with http error, 404 error, timeout error to ensure that we get all data of valid IDs
+Second, run ```collect_data.py``` with http error, 404 error, timeout error to ensure that we get all data of valid IDs <br />
 Third, run ```process_description.py``` to normalize the html tags and extract image sources in the description and add them to the images field
 
 # Performance
@@ -53,6 +53,6 @@ The total amount of time: approximately 5207s, which is roughly 87 minutes (1 ho
 
 # Result
 198942 products are collected  <br />
-1058 product ids contain 404: Not Found error
-0 product ids contains HTTP error (except for 404)
+1058 product ids contain 404: Not Found error <br />
+0 product ids contains HTTP error (except for 404) <br />
 0 product ids contains timeout error
