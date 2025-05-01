@@ -2,10 +2,9 @@ import json
 import re
 import os
 from tqdm import tqdm
+import time
 
-input_folder = "output_raw"
-output_folder = "output"
-
+os.makedirs("output", exist_ok=True)
 
 def clean_description_and_extract_images(description):
     images_in_description = []
@@ -34,13 +33,13 @@ def clean_description_and_extract_images(description):
     return description, images_in_description
 
 if __name__ == "__main__":
+    start_time = time.time()
     # Get all json file
-    file_list = [f for f in os.listdir(input_folder) if f.endswith(".json")]
-
+    file_list = [f for f in os.listdir("output_raw") if f.endswith(".json")]
 
     for filename in tqdm(file_list):
-        input_path = os.path.join(input_folder, filename)
-        output_path = os.path.join(output_folder, filename)
+        input_path = os.path.join("output_raw", filename)
+        output_path = os.path.join("output", filename)
 
         # Load data
         with open(input_path, "r", encoding="utf-8") as f:
@@ -62,5 +61,7 @@ if __name__ == "__main__":
         # Write to another file
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-
+    end_time = time.time()
+    duration = end_time - start_time
+    print(f"Completed in {duration:.2f} seconds")
     print("DONE")
