@@ -1,0 +1,12 @@
+API_URL: "https://api.tiki.vn/product-detail/api/v1/products/{product_id}"
+HEADERS:
+  User-Agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+BATCH_SIZE: 1000
+POOL_SIZE: 40
+MAX_TRIES: 5
+TIMEOUT: 15
+SLEEP_BEFORE_RETRIES: 2
+LOGGING:
+  level: INFO
+  log_file: logs/fetch_log.log
+  to_console: true
