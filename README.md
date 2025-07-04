@@ -57,3 +57,28 @@ The total amount of time: approximately 5207s, which is roughly 87 minutes (1 ho
 1058 product ids contain 404: Not Found error <br />
 0 product ids contains HTTP error (except for 404) <br />
 0 product ids contains timeout error
+
+# Structure Files
+tiki_api_fetcher/  
+├── scripts/                   # Chứa các shell script như Doall.sh  
+├── sql/                       # Các file SQL (schema, functions...)  
+├── data/                      # Thư mục lưu dữ liệu thô hoặc tạm thời  
+├── tiki_fetcher/              # Core Python package chứa source code chính  
+│   ├── init (http://init.py/).py (http://init.py/)  
+│   ├── api_client.py          # Các hàm gọi API và fetch dữ liệu  
+│   ├── processing/            # Module xử lý dữ liệu  
+│   │   ├── init (http://init.py/).py (http://init.py/)  
+│   │   ├── categorize.py  
+│   │   ├── duplicates.py  
+│   │   └── transform.py  
+│   ├── database/              # Các kết nối DB, query DB  
+│   │   ├── init (http://init.py/).py (http://init.py/)  
+│   │   └── db_handler.py  
+│   └── config.py              # Quản lý cấu hình tập trung  
+├── tests/                     # Thư mục cho unit tests  
+│   ├── test_api_client.py  
+│   ├── test_processing.py  
+│   └── test_db.py  
+├── requirements.txt  
+├── README.md  
+└── .gitignore  
